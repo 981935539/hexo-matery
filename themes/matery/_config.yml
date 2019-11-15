@@ -61,8 +61,8 @@ music:
 video:
   enable: false
   showTitle: true
-  title: 邓紫棋 - 差不多姑娘
-  url: /medias/video/chabuduoguniang.mp4 # 必填
+  title: Alizée - La isla bonita
+  url: /medias/video/Alizée - La isla bonita (live).mp4 # 必填
   pic:
   thumbnails:
   height: # 如：400
@@ -97,9 +97,9 @@ indexbtn:
 socialLink:
   qq: 981935539
   github: 981935539
-  weibo: 
+  weibo: 981935539
   email: 981935539@qq.com
-  zhihu: 
+  zhihu: 981935539
 
 # Whether to activate the Post TOC, and Configure which title types are supported by TOC support.
 # You can add `toc: false` to the Front-matter of a post to turn off the TOC.

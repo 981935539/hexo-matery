@@ -16,7 +16,6 @@ categories: 随笔
 
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=4913023&auto=1&height=66"></iframe>
 
-
 # 前言
 
 ​	**准备工作**
@@ -228,7 +227,21 @@ hexo d -g #生成并上传
 
    
 
-# 九、参考
+# 九、Ubuntu安装node.js和hexo
+
+```shell
+tar -xvf node-v12.13.0-linux-x64.tar.xz
+sudo mv node-v12.13.0-linux-x64 /usr/local
+sudo ln -s /usr/local/node-v12.13.0-linux-x64/bin/node /usr/local/bin/node
+sudo ln -s /usr/local/node-v12.13.0-linux-x64/bin/npm /usr/local/bin/npm
+
+sudo npm install -g hexo
+sudo ln -s /usr/local/node-v12.13.0-linux-x64/bin/hexo /usr/local/bin/hexo
+```
+
+
+
+# 十、参考
 
 ​	https://godweiyang.com/2018/04/13/hexo-blog/#toc-heading-9
 

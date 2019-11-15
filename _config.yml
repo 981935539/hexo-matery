@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Ace
+title: 杨青海的博客
 subtitle: ACE
 description: 计算机科学与技术 | 计算机视觉
 keywords: "Ace 自然语言处理 深度学习"
@@ -48,7 +48,7 @@ prism_plugin:
   mode: 'preprocess'    # realtime/preprocess
   theme: 'tomorrow'
   line_number: true    # default false
-  custom_css:
+  custom_css: 
 
 search:
   path: search.xml

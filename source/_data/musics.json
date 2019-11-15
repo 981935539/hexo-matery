@@ -1,23 +1,23 @@
 [
 	{
-		"name": "夜曲",
-		"artist": "周杰伦",
-		"url": "/medias/music/yequ.mp3",
+		"name": "Sound of Silence",
+		"artist": "Emiliana Torrini",
+		"url": "/medias/music/Silence.mp3",
 		"cover": "/medias/music/avatars/yequ.jpg"
 	},{
-		"name": "一路向北",
-		"artist": "周杰伦",
-		"url": "/medias/music/yiluxiangbei.mp3",
+		"name": "挥着翅膀的女孩",
+		"artist": "朴素妍",
+		"url": "/medias/music/fly.mp3",
 		"cover": "/medias/music/avatars/yiluxiangbei.jpg"
 	},{
-		"name": "来自天堂的魔鬼",
-		"artist": "邓紫棋",
-		"url": "/medias/music/tiantangdemogui.mp3",
+		"name": "ひとり上手",
+		"artist": "中島みゆき",
+		"url": "/medias/music/yinlong.mp3",
 		"cover": "/medias/music/avatars/tiantangdemogui.jpg"
 	},{
-		"name": "倒数",
-		"artist": "邓紫棋",
-		"url": "/medias/music/daoshu.mp3",
+		"name": "鬼迷心窍",
+		"artist": "李宗盛",
+		"url": "/medias/music/guimixinqiao.mp3",
 		"cover": "/medias/music/avatars/daoshu.jpg"
 	}
 ]
