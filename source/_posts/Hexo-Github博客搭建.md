@@ -16,6 +16,7 @@ categories: 随笔
 
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=4913023&auto=1&height=66"></iframe>
 
+
 # 前言
 
 ​	**准备工作**
@@ -181,7 +182,53 @@ hexo d -g #生成并上传
 
    
 
-# 八、参考
+# 八、备份博客源文件
+
+​	博客已经搭建完成，但是博客仓库只是保存生成的静态网页文件，是没有博客源文件的，如果电脑出现了问题，那就麻烦了，所以源文件也需要备份一下。
+
+1. 在`Github`上创建一个与本地仓库同名的仓库, 我的是`hexo-matery`
+
+2. 初始化本地仓库
+
+   ```shell
+   git init       
+   添加.gitignore文件
+   .gitignore
+       .DS_Store
+       Thumbs.db
+       *.log
+       public/
+       .deploy*/
+       .vscode/
+   ```
+
+   
+
+3. 连接到远程`Github`,
+
+   ```shell
+   git remote add github git@github.com:981935539/hexo-matery.git
+   git fetch
+   git merge --allow-unrelated-histories github/master
+   ```
+
+4. 推送本地源文件到`Github`
+
+   ```shell
+   git add .
+   git commit -m "第一次备份本地仓库"
+   git push --set-upstream github master
+   ```
+
+   
+
+5. 现在在任何一台电脑上, 执行`git clonegit@github.com:981935539/hexo-matery.git`
+
+   就可以把博客源文件复制到本地。
+
+   
+
+# 九、参考
 
 ​	https://godweiyang.com/2018/04/13/hexo-blog/#toc-heading-9
 
