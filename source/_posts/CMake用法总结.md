@@ -603,7 +603,7 @@ add_executable(<name> [WIN32] [MACOSX_BUNDLE]
 
 ### add_subdirectory
 
-```
+```shell
 在构建中添加一个子目录。
 add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 将一个子目录添加到构建中。source_dir指定源CMakeLists.txt和代码文件所在的目录。binary_dir指定了输出文件放置的目录以及编译输出的路径。EXCLUDE_FROM_ALL 参数的含义是将这个目录从编译过程中排除，比如，工程的 example，可能就需要工程构建完成后，再进入 example 目录单独进行构建(当然，你也可以通过定义依赖来解决此类问题)。
@@ -613,7 +613,7 @@ build/source_dir 目录(这个目录跟原有的 source_dir 目录对应)，指�
 
 ### subdirs
 
-```
+```shell
 构建多个子目录
 subdirs(dir1 dir2 ...[EXCLUDE_FROM_ALL exclude_dir1 exclude_dir2 ...]
         [PREORDER] )
@@ -630,7 +630,7 @@ SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
 ### add_library
 
-```
+```shell
 ADD_LIBRARY(libname [SHARED|STATIC|MODULE]
 [EXCLUDE_FROM_ALL]
 source1 source2 ... sourceN)
@@ -648,7 +648,7 @@ EXCLUDE_FROM_ALL 参数的意思是这个库不会被默认构建，除非有其
 
 ### include_directories
 
-```
+```shell
 将include目录添加到构建中
 include_directories([AFTER|BEFORE] [SYSTEM] dir1 [dir2 ...])
 将给定目录添加到编译器用于搜索头文件的路径中。
@@ -662,7 +662,7 @@ include_directories([AFTER|BEFORE] [SYSTEM] dir1 [dir2 ...])
 
 ### target_link_libraries & link_directories
 
-```
+```shell
 TARGET_LINK_LIBRARIES(target library1
 <debug | optimized> library2
 ...)
@@ -677,18 +677,27 @@ TARGET_LINK_LIBRARIES(main libhello.so)
 
 ### ADD_DEFINITIONS
 
+```shell
 向 C/C++编译器添加-D 定义，比如:
 ADD_DEFINITIONS(-DENABLE_DEBUG -DABC)，参数之间用空格分割。
 如果你的代码中定义了#ifdef ENABLE_DEBUG #endif，这个代码块就会生效。如果要添加其他的编译器开关，可以通过 CMAKE_C_FLAGS 变量和 CMAKE_CXX_FLAGS 变量设置。
+```
+
+
 
 ### ADD_DEPENDENCIES
 
+```shell
 定义 target 依赖的其他 target，确保在编译本 target 之前，其他的 target 已经被构建。
 ADD_DEPENDENCIES(target-name depend-target1
 depend-target2 ...)
+```
+
+
 
 ### ADD_TEST 与 ENABLE_TESTING 指令。
 
+```shell
 ENABLE_TESTING 指令用来控制 Makefile 是否构建 test 目标，涉及工程所有目录。语法很简单，没有任何参数，ENABLE_TESTING()，一般情况这个指令放在工程的主CMakeLists.txt 中.
 ADD_TEST 指令的语法是:
 	`ADD_TEST(testname Exename arg1 arg2 ...)`
@@ -699,9 +708,13 @@ testname 是自定义的 test 名称，Exename 可以是构建的目标文件也
 ADD_TEST(mytest ${PROJECT_BINARY_DIR}/bin/main)
 ENABLE_TESTING()
 生成 Makefile 后，就可以运行 make test 来执行测试了。
+```
+
+
 
 ### AUX_SOURCE_DIRECTORY
 
+```shell
 基本语法是：
 AUX_SOURCE_DIRECTORY(dir VARIABLE)
 作用是发现一个目录下所有的源代码文件并将列表存储在一个变量中，这个指令临时被用来
@@ -710,12 +723,19 @@ AUX_SOURCE_DIRECTORY(dir VARIABLE)
 AUX_SOURCE_DIRECTORY(. SRC_LIST)
 ADD_EXECUTABLE(main ${SRC_LIST})
 你也可以通过后面提到的 FOREACH 指令来处理这个 LIST
+```
+
+
 
 ###　CMAKE_MINIMUM_REQUIRED
 
+```sehll
 其语法为 CMAKE_MINIMUM_REQUIRED(VERSION versionNumber [FATAL_ERROR])
 比如 CMAKE_MINIMUM_REQUIRED(VERSION 2.5 FATAL_ERROR)
 如果 cmake 版本小与 2.5，则出现严重错误，整个过程中止。
+```
+
+
 
 ### EXEC_PROGRAM
 
@@ -765,12 +785,16 @@ FILE(TO_NATIVE_PATH path result)
 
 ### INCLUDE 指令
 
+```shell
 用来载入 CMakeLists.txt 文件，也用于载入预定义的 cmake 模块.
 	INCLUDE(file1 [OPTIONAL])
 	INCLUDE(module [OPTIONAL])
 OPTIONAL 参数的作用是文件不存在也不会产生错误。
 你可以指定载入一个文件，如果定义的是一个模块，那么将在 CMAKE_MODULE_PATH 中搜索这个模块并载入。
 载入的内容将在处理到 INCLUDE 语句是直接执行。
+```
+
+
 
 ## 2. 控制指令：
 
@@ -917,7 +941,51 @@ ENDFOREACH(A)
 
 
 
-# 十、参考
+# 十、`CMakeLists`配置模板
+
+## １.基本配置
+
+```shell
+cmake_minimum_required(VERSION 3.14)
+project(XXX_Project)
+
+# 设置CMAKE版本
+set(CMAKE_CXX_STANDARD 14)
+
+# 设置输出目录为 build/Debug/bin build/Debug/lib
+# 并缓存路径
+set(OUTPUT_DIRECTORY_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${OUTPUT_DIRECTORY_ROOT}/bin" CACHE PATH "Runtime directory" FORCE)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${OUTPUT_DIRECTORY_ROOT}/lib" CACHE PATH "Library directory" FORCE)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${OUTPUT_DIRECTORY_ROOT}/lib" CACHE PATH "Archive directory" FORCE)
+
+# 添加src子目录
+add_subdirectory(src)
+```
+
+## ２.依赖库相关配置
+
+**`OPenCV`依赖库**
+
+将`OpenCV`依赖库下的`share/OpenCV`中，`OpenCVConfig.cmake`复制一份叫`FindOpenCV.cmake`，然后在根目录的CMakeLists.txt添加如下配置
+
+```shell
+#　添加make文件搜索路径
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ~/3rdparty/OpenCV-3.4.7/share/OpenCV)
+
+# 查找cmake文件，并初始化变量
+find_package(OpenCV REQUIRED)
+# 添加头文件搜索路径
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+# 给执行程序添加链接库
+add_executable(XXXXMain main.cpp)
+target_link_libraries(XXXXMain ${OpenCV_LIBS})
+```
+
+
+
+# 十一、参考
 
 1. [http://file.ncnynl.com/ros/CMake%20Practice.pdf](http://file.ncnynl.com/ros/CMake Practice.pdf)
 2. https://cmake.org/cmake/help/latest/guide/tutorial/index.html
