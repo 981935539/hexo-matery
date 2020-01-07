@@ -4,10 +4,10 @@ top: false
 cover: false
 toc: true
 mathjax: true
-date: 2019-12-02 20:04:54
+date: 2019-12-30 00:47:24
 password:
 summary:
-tags: 
+tags:
 - DL
 - Python
 categories: 深度学习
@@ -21,7 +21,7 @@ categories: 深度学习
 
 # 一、LeNet
 
-1998年LeCun发布了LeNet网络架构，从而揭开了深度学习的神秘面纱。
+1998年LeCun发布了[LeNet][http://www.dengfanxin.cn/wp-content/uploads/2016/03/1998Lecun.pdf]网络架构，从而揭开了深度学习的神秘面纱。
 
 ​	![](c1.png)
 
@@ -282,7 +282,7 @@ def VGG16Net(width, height, depth, classes):
     model.add(Conv2D(64,(3,3),strides=(1,1),input_shape=(224,224,3),padding='same',activation='relu'))
     model.add(Conv2D(64,(3,3),strides=(1,1),padding='same',activation='relu'))
     model.add(MaxPooling2D(pool_size=(2,2)))
-    model.add(Conv2D(128,(3,2),strides=(1,1),padding='same',activation='relu'))
+    model.add(Conv2D(128,(3,3),strides=(1,1),padding='same',activation='relu'))
     model.add(Conv2D(128,(3,3),strides=(1,1),padding='same',activation='relu'))
     model.add(MaxPooling2D(pool_size=(2,2)))
     model.add(Conv2D(256,(3,3),strides=(1,1),padding='same',activation='relu'))
@@ -350,8 +350,7 @@ plt.show()
 
 GoogLeNet的特征:
 
--  Inception结构使用了多个大小不同的滤波器（和池化），
-  最后再合并它们的结果
+-  Inception结构使用了多个大小不同的滤波器（和池化），最后再合并它们的结果
 - 最重要的是使用了1×1卷积核（NiN）来减少后续并行操作的特征数量。这个思想现在叫做“bottleneck layer”。
 
 ```python
@@ -479,7 +478,7 @@ plt.show()
 
 
 
-# 六、Inception V3（还有V2)
+# 六、Inception V3
 
 Christian 和他的团队都是非常高产的研究人员。2015 年 2 月，**Batch-normalized Inception** 被引入作为**Inception V2**。
 
@@ -504,15 +503,17 @@ Christian 和他的团队都是非常高产的研究人员。2015 年 2 月，**
 
 2015年12月[ResNet](https://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1512.03385v1.pdf)发表了，时间上大概与Inception v3网络一起发表的。
 
+我们已经知道加深层对于提升性能很重要。但是，在深度学习中，过度加深层的话，会出现梯度消失、梯度爆炸、网络退化，导致最终性能不佳。 ResNet中，为了解决这类问题，导入了“快捷结构”（也称为“捷径”或“小路”）。导入这个快捷结构后，就可以随着层的加深而不断提高性能了（当然，层的加深也是有限度的）。 
+
+![](09.png)
+
+图，在连续2层的卷积层中，将输入x跳着连接至2层后的输出。这里的重点是，通过快捷结构，原来的2层卷积层的输出$F(x)$变成了$F(x) + x$。通过引入这种快捷结构，即使加深层，也能高效地学习。 
+
+因为快捷结构只是原封不动地传递输入数据，所以反向传播时会将来自上游的梯度原封不动地传向下游。这里的重点是不对来自上游的度进行任何处理，将其原封不动地传向下游。因此，基于快捷结构，不用担心梯度会变小（或变大），能够向前一层传递“有意义的梯度”。通过这个快捷结构，之前因为加深层而导致的梯度变小的梯度消失问题就有望得到缓解。
+
 ![](c8.png)
 
-**ResNet的特征:**
-
-- 原来的2层卷积层的输出F(x)变成了F(x) + x。通过引入这种快捷结构，即使加深层，也能高效地学习。
-
-  因为快捷结构只是原封不动地传递输入数据，所以反向传播时会将来自上游的梯度原封不动地传向下游。这里的重点是不对来自上游的度进行任何处理，将其原封不动地传向下游。因此，基于快捷结构，不用担心梯度会变小（或变大），能够向前一层传递“有意义的梯度”。通过这个快捷结构，之前因为加深层而导致的梯度变小的梯度消失问题就有望得到缓解。
-
-- 使用1x1卷积核减少特征数
+ResNet通过以2个卷积层为间隔跳跃式地连接来加深层。另外，根据实验的结果，即便加深到150层以上，识别精度也会持续提高。并且，在ILSVRC大赛中， ResNet的错误识别率为3.5%（前5类中包含正确解这一精度下的错误识别率），令人称奇。 
 
 
 
@@ -635,11 +636,173 @@ plt.show()
 
 
 
-# 八、Xception
+
+
+# 八、Inception v4 和 Inception-ResNet
+
+2016年2月
+
+Inception v4 和 Inception -ResNet 在同一篇论文[《Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning》][https://arxiv.org/abs/1602.07261].首先说明一下Inception v4**没有**使用残差学习的思想, 而出自同一篇论文的Inception-Resnet-v1和Inception-Resnet-v2才是Inception module与残差学习的结合产物。Inception-ResNet和Inception v4网络结构都是基于Inception v3的改进。
+
+**Inception v4中的三个基本模块**：
+
+
+
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="v1.png"  width="180" height="240" ></div>
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="v2.png" width="180" height="240" ></div>
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="v3.png" width="180" height="240" ></div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. 左图是基本的Inception v2/v3模块，使用两个3x3卷积代替5x5卷积，并且使用average pooling，该模块主要处理尺寸为35x35的feature map；
+
+2. 中图模块使用1xn和nx1卷积代替nxn卷积，同样使用average pooling，该模块主要处理尺寸为17x17的feature map；
+
+3. 右图在原始的8x8处理模块上将3x3卷积用1x3卷积和3x1卷积。 
+
+总的来说，Inception v4中基本的Inception module还是沿袭了Inception v2/v3的结构，只是结构看起来更加简洁统一，并且使用更多的Inception module，实验效果也更好。
+
+下图左图为Inception v4的网络结构，右图为Inception v4的Stem模块：
+
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="v10.png"  width="250" height="350" ></div>
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="v11.png" width="250" height="350" ></div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+
+
+
+
+
+**Inception-Resnet-v1基本模块**：
+
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="v4.png"  width="180" height="240" ></div>
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="v5.png" width="180" height="240" ></div>
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="v6.png" width="180" height="240" ></div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. Inception module都是简化版，没有使用那么多的分支，因为identity部分（直接相连的线）本身包含丰富的特征信息；
+2. Inception module每个分支都没有使用pooling；
+3. 每个Inception module最后都使用了一个1x1的卷积（linear activation），作用是保证identity部分和Inception部分输出特征维度相同，这样才能保证两部分特征能够相加。
+
+  
+
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="v12.png"  width="250" height="350" ></div>
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="v13.png" width="250" height="350" ></div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**Inception-Resnet-v2基本模块：**：
+
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="v7.png"  width="180" height="240" ></div>
+<div style="float:left;border:solid 1px 000;margin:2px;"><img src="v8.png" width="180" height="240" ></div><div style="float:left;border:solid 1px 000;margin:2px;"><img src="v9.png" width="180" height="240" ></div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+
+Inception-Resnet-v2网络结构同Inception-Resnet-v1，Stem模块同Inception v4
+
+
+
+
+
+# 九、Xception
 
 2016年８月
 
 [Xception](https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1610.02357)是google继Inception后提出的对Inception v3的另一种改进，主要是采用depthwise separable convolution来替换原来Inception v3中的卷积操作。
+
+
+
+**结构的变形过程如下**：
+
+- 在 Inception 中，特征可以通过 1×1卷积，3×3卷积，5×5 卷积，pooling 等进行提取，Inception 结构将特征类型的选择留给网络自己训练，也就是将一个输入同时输给几种提取特征方式，然后做 concat 。Inception-v3的结构图如下:
+
+  ![](x1.png)
+
+- 对 Inception-v3 进行简化，去除 Inception-v3 中的 avg pool 后，输入的下一步操作就都是 1×1卷积：
+
+  ![](x2.png)
+
+- 提取 1×1卷积的公共部分：
+
+  ![](x3.png)
+
+- Xception（**极致的 Inception**）：先进行普通卷积操作，再对 1×1卷积后的每个channel分别进行 3×3卷积操作，最后将结果 concat：
+
+  ![](x4.png)
+
+**深度可分离卷积 Depthwise Separable Convolution**
+
+传统卷积的实现过程：
+
+![](x5.png)
+
+Depthwise Separable Convolution 的实现过程：
+
+![](x6.png)
+
+
+
+**Depthwise Separable Convolution 与 极致的 Inception 区别：**
+
+极致的 Inception：
+
+​	第一步：普通 1×1卷积。
+
+​	第二步：对 1×1卷积结果的每个 channel，分别进行 3×3卷积操作，并将结果 concat。
+
+Depthwise Separable Convolution：
+
+​	第一步：Depthwise 卷积，对输入的每个channel，分别进行 3×3 卷积操作，并将结果 concat。
+
+​	第二步：Pointwise 卷积，对 Depthwise 卷积中的 concat 结果，进行 1×1卷积操作。
+
+两种操作的循序不一致：Inception 先进行 1×1卷积，再进行 3×3卷积；Depthwise Separable Convolution 先进行 3×3卷积，再进行 1×11×1 卷积。
+
 
 
 
@@ -649,7 +812,11 @@ plt.show()
 
 ​	https://www.zhihu.com/question/53727257/answer/136261195
 
-​	https://blog.csdn.net/u014380165/article/details/75142710
+​	https://blog.csdn.net/lk3030/article/details/84847879
 
-​	[https://medium.com/%E9%9B%9E%E9%9B%9E%E8%88%87%E5%85%94%E5%85%94%E7%9A%84%E5%B7%A5%E7%A8%8B%E4%B8%96%E7%95%8C/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92-ml-note-cnn%E6%BC%94%E5%8C%96%E5%8F%B2-alexnet-vgg-inception-resnet-keras-coding-668f74879306](https://medium.com/雞雞與兔兔的工程世界/機器學習-ml-note-cnn演化史-alexnet-vgg-inception-resnet-keras-coding-668f74879306)
+​	https://blog.csdn.net/zzc15806/article/details/83504130
+
+
+
+[https://medium.com/%E9%9B%9E%E9%9B%9E%E8%88%87%E5%85%94%E5%85%94%E7%9A%84%E5%B7%A5%E7%A8%8B%E4%B8%96%E7%95%8C/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92-ml-note-cnn%E6%BC%94%E5%8C%96%E5%8F%B2-alexnet-vgg-inception-resnet-keras-coding-668f74879306](https://medium.com/雞雞與兔兔的工程世界/機器學習-ml-note-cnn演化史-alexnet-vgg-inception-resnet-keras-coding-668f74879306)
 
