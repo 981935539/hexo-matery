@@ -21,7 +21,7 @@ categories: 深度学习
 
 # 一、LeNet
 
-1998年LeCun发布了[LeNet][http://www.dengfanxin.cn/wp-content/uploads/2016/03/1998Lecun.pdf]网络架构，从而揭开了深度学习的神秘面纱。
+1998年LeCun发布了[LeNet](http://www.dengfanxin.cn/wp-content/uploads/2016/03/1998Lecun.pdf)网络架构，从而揭开了深度学习的神秘面纱。
 
 ​	![](c1.png)
 
@@ -118,8 +118,7 @@ plt.show()
 
 ​	![](c2.png)
 
-AlexNet叠有多个卷积层和池化层，最后经由全连接层输出结果。虽然
-结构上AlexNet和LeNet没有大的不同，但有以下几点差异。
+AlexNet叠有多个卷积层和池化层，最后经由全连接层输出结果。虽然结构上AlexNet和LeNet没有大的不同，但有以下几点差异。
 
 - 激活函数使用ReLU。
 - 使用进行局部正规化的LRN（Local Response Normalization）层
@@ -642,7 +641,7 @@ plt.show()
 
 2016年2月
 
-Inception v4 和 Inception -ResNet 在同一篇论文[《Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning》][https://arxiv.org/abs/1602.07261].首先说明一下Inception v4**没有**使用残差学习的思想, 而出自同一篇论文的Inception-Resnet-v1和Inception-Resnet-v2才是Inception module与残差学习的结合产物。Inception-ResNet和Inception v4网络结构都是基于Inception v3的改进。
+Inception v4 和 Inception -ResNet 在同一篇论文[《Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning》](https://arxiv.org/abs/1602.07261).首先说明一下Inception v4**没有**使用残差学习的思想, 而出自同一篇论文的Inception-Resnet-v1和Inception-Resnet-v2才是Inception module与残差学习的结合产物。Inception-ResNet和Inception v4网络结构都是基于Inception v3的改进。
 
 **Inception v4中的三个基本模块**：
 
@@ -651,7 +650,6 @@ Inception v4 和 Inception -ResNet 在同一篇论文[《Inception-v4, Inception
 <div style="float:left;border:solid 1px 000;margin:2px;"><img src="v1.png"  width="180" height="240" ></div>
 <div style="float:left;border:solid 1px 000;margin:2px;"><img src="v2.png" width="180" height="240" ></div>
 <div style="float:left;border:solid 1px 000;margin:2px;"><img src="v3.png" width="180" height="240" ></div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-
 
 
 
@@ -679,13 +677,11 @@ Inception v4 和 Inception -ResNet 在同一篇论文[《Inception-v4, Inception
 
 
 
-
 **Inception-Resnet-v1基本模块**：
 
 <div style="float:left;border:solid 1px 000;margin:2px;"><img src="v4.png"  width="180" height="240" ></div>
 <div style="float:left;border:solid 1px 000;margin:2px;"><img src="v5.png" width="180" height="240" ></div>
 <div style="float:left;border:solid 1px 000;margin:2px;"><img src="v6.png" width="180" height="240" ></div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-
 
 
 
@@ -727,12 +723,10 @@ Inception v4 和 Inception -ResNet 在同一篇论文[《Inception-v4, Inception
 
 
 
-
 **Inception-Resnet-v2基本模块：**：
 
 <div style="float:left;border:solid 1px 000;margin:2px;"><img src="v7.png"  width="180" height="240" ></div>
 <div style="float:left;border:solid 1px 000;margin:2px;"><img src="v8.png" width="180" height="240" ></div><div style="float:left;border:solid 1px 000;margin:2px;"><img src="v9.png" width="180" height="240" ></div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-
 Inception-Resnet-v2网络结构同Inception-Resnet-v1，Stem模块同Inception v4
 
 
@@ -791,7 +785,7 @@ Depthwise Separable Convolution：
 
 ​	第二步：Pointwise 卷积，对 Depthwise 卷积中的 concat 结果，进行 1×1卷积操作。
 
-两种操作的循序不一致：Inception 先进行 1×1卷积，再进行 3×3卷积；Depthwise Separable Convolution 先进行 3×3卷积，再进行 1×11×1 卷积。
+两种操作的循序不一致：Inception 先进行 1×1卷积，再进行 3×3卷积；Depthwise Separable Convolution 先进行 3×3卷积，再进行1×1 卷积。
 
 
 
@@ -799,9 +793,9 @@ Depthwise Separable Convolution：
 
 2016年8yue
 
-[DenseNe][https://arxiv.org/abs/1608.06993]的基本思路与ResNet一致，但是它建立的是前面所有层与后面层的密集连接（dense connection），它的名称也是由此而来。DenseNet的另一大特色是通过特征在channel上的连接来实现特征重用（feature reuse）。这些特点让DenseNet在参数和计算成本更少的情形下实现比ResNet更优的性能，DenseNet也因此斩获CVPR 2017的最佳论文奖。
+[DenseNe](https://arxiv.org/abs/1608.06993)的基本思路与ResNet一致，但是它建立的是前面所有层与后面层的密集连接（dense connection），它的名称也是由此而来。DenseNet的另一大特色是通过特征在channel上的连接来实现特征重用（feature reuse）。这些特点让DenseNet在参数和计算成本更少的情形下实现比ResNet更优的性能，DenseNet也因此斩获CVPR 2017的最佳论文奖。
 
-![](深度学习之CNN模型演化/d1.png)
+![](d1.png)
 
 
 
@@ -815,15 +809,15 @@ Depthwise Separable Convolution：
 
 CNN网络一般要经过Pooling或者stride>1的Conv来降低特征图的大小，而DenseNet的密集连接方式需要特征图大小保持一致。为了解决这个问题，DenseNet网络中使用DenseBlock+Transition的结构，其中DenseBlock是包含很多层的模块，每个层的特征图大小相同，层与层之间采用密集连接方式。而Transition模块是连接两个相邻的DenseBlock，并且通过Pooling使特征图大小降低。
 
-![](深度学习之CNN模型演化/d2.jpg)
+![](d2.jpg)
 
 
 
-在DenseBlock中，各个层的特征图大小一致，可以在channel维度上连接。DenseBlock中的非线性组合函数 $H$采用的是**BN+ReLU+3x3 Conv**的结构。另外值得注意的一点是，与ResNet不同，所有DenseBlock中各个层卷积之后均输出 ![[公式]](https://www.zhihu.com/equation?tex=k) 个特征图，即得到的特征图的channel数为$k$，或者说采用$k$个卷积核。$k$ 在DenseNet称为growth rate，这是一个超参数。一般情况下使用较小的 $k$（比如12），就可以得到较佳的性能。假定输入层的特征图的channel数为 $k_0$，那么 ![[公式]](https://www.zhihu.com/equation?tex=l) 层输入的channel数为$k_0 + k(l-1)$，因此随着层数增加，尽管 ![[公式]](https://www.zhihu.com/equation?tex=k) 设定得较小，DenseBlock的输入会非常多，不过这是由于特征重用所造成的，每个层仅有 ![[公式]](https://www.zhihu.com/equation?tex=k) 个特征是自己独有的。
+在DenseBlock中，各个层的特征图大小一致，可以在channel维度上连接。DenseBlock中的非线性组合函数 $H$采用的是**BN+ReLU+3x3 Conv**的结构。另外值得注意的一点是，与ResNet不同，所有DenseBlock中各个层卷积之后均输出个**K**特征图，即得到的特征图的channel数为$k$，或者说采用$k$个卷积核。$k$ 在DenseNet称为growth rate，这是一个超参数。一般情况下使用较小的 $k$（比如12），就可以得到较佳的性能。假定输入层的特征图的channel数为 $k_0$，那么$l$层输入的channel数为$k_0 + k(l-1)$，因此随着层数增加，尽管**K**设定得较小，DenseBlock的输入会非常多，不过这是由于特征重用所造成的，每个层仅有 **K** 个特征是自己独有的。
 
 
 
-![](深度学习之CNN模型演化/d3.jpg)
+![](d3.jpg)
 
 由于后面层的输入会非常大，DenseBlock内部可以采用bottleneck层来减少计算量，主要是原有的结构中增加1x1 Conv，如图7所示，即**BN+ReLU+1x1 Conv+BN+ReLU+3x3 Conv**，称为DenseNet-B结构。其中1x1 Conv得到 $4k$个特征图它起到的作用是降低特征数量，从而提升计算效率。
 
